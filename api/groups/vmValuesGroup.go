@@ -6,6 +6,7 @@ import (
 	"math/big"
 	"net/http"
 	"sync"
+	"time"
 
 	"github.com/ElrondNetwork/elrond-go-core/core/check"
 	"github.com/ElrondNetwork/elrond-go-core/data/vm"
@@ -133,6 +134,15 @@ func (vvg *vmValuesGroup) doExecuteQuery(context *gin.Context) (*vm.VMOutputApi,
 	if err != nil {
 		return nil, "", errors.ErrInvalidJSONRequest
 	}
+
+	startTime := time.Now()
+
+	defer func() {
+		endTime := time.Since(startTime)
+		if endTime > time.Second*5 {
+			log.Info("doExecuteQuery", "request", request)
+		}
+	}()
 
 	command, err := vvg.createSCQuery(&request)
 	if err != nil {
