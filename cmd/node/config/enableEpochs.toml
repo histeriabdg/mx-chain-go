@@ -50,7 +50,7 @@
     SenderInOutTransferEnableEpoch = 1
 
     # StakeEnableEpoch represents the epoch when staking is enabled
-    StakeEnableEpoch = 0
+    StakeEnableEpoch = 1
 
     # StakingV2EnableEpoch represents the epoch when staking v2 is enabled
     StakingV2EnableEpoch = 1
