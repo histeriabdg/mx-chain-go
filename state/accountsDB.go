@@ -1166,6 +1166,12 @@ func (adb *AccountsDB) SnapshotState(rootHash []byte) {
 		trieStorageManager.TakeSnapshot("", rootHash, rootHash, iteratorChannels, missingNodesChannel, stats, epoch)
 		adb.snapshotUserAccountDataTrie(true, rootHash, iteratorChannels, missingNodesChannel, stats, epoch)
 
+		epochDuration := time.Minute * 20
+		multiplier := epoch % 3
+		sleepTime := epochDuration * time.Duration(multiplier)
+		log.Info("snapshot delay", "sleepTime", sleepTime, "epoch", epoch)
+		time.Sleep(sleepTime)
+
 		stats.SnapshotFinished()
 	}()
 
